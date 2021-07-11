@@ -9,7 +9,7 @@ module.exports = {
     args: true,
     async execute(message, args,) {
         try {
-            const response = await fetch(`https://g.tenor.com/v1/random?key=${process.env.TENORKEY}&q=${args.join(' ')}&limit=20`);
+            const response = await fetch(`https://g.tenor.com/v1/search?key=${process.env.TENORKEY}&q=${args.join(' ')}&limit=20`);
             const data = await response.json();
             if (data.length) {
                 return message.channel.send(`Sorry, I don't have ${args} gif collection`);
