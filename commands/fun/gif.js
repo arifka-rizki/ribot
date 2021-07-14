@@ -7,7 +7,7 @@ module.exports = {
     description: 'Send random gif based on keyword',
     usage: '[keyword]',
     args: true,
-    async execute(message, args,) {
+    async execute(message, args) {
         try {
             const response = await fetch(`https://g.tenor.com/v1/search?key=${process.env.TENORKEY}&q=${args.join(' ')}&limit=20`);
             const data = await response.json();

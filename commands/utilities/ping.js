@@ -16,7 +16,7 @@ module.exports = {
 
             const embedMessage = new Discord.MessageEmbed()
                 .setColor(color)
-                .setDescription(`:hourglass: ${ping} ms`);
+                .setDescription(`:hourglass: ${ping}ms`);
 
             msg.edit(':ping_pong: pong');
             msg.edit(embedMessage);
