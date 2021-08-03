@@ -5,7 +5,7 @@ const applyText = (canvas, text) => {
     let fontSize = 70;
 
     do {
-        context.font = `${fontSize -= 10}px sans-serif`;
+        context.font = `${fontSize -= 10}px Roboto Medium`;
     } while (context.measureText(text).width > canvas.width - 300);
 
     return context.font;
@@ -17,6 +17,8 @@ module.exports = async (Discord, client, member) => {
     if (!channel) return;
     member.roles.add(welcomeRole);
 
+    Canvas.registerFont('./resources/Roboto.ttf', { family: 'Roboto' });
+
     const canvas = Canvas.createCanvas(700, 250);
     const context = canvas.getContext('2d');
     const background = await Canvas.loadImage('./resources/wallpaper.jpg');
@@ -26,7 +28,7 @@ module.exports = async (Discord, client, member) => {
     context.strokeStyle = '#74037b';
     context.strokeRect(0, 0, canvas.width, canvas.height);
 
-    context.font = '28px sans-serif';
+    context.font = '28px Roboto Medium';
     context.fillStyle = '#ffffff';
     context.fillText('Welcome to the server,', canvas.width / 2.5, canvas.height / 3.5);
 
