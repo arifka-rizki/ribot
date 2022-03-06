@@ -1,14 +1,20 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
 module.exports = {
-    name: 'avatar',
-    aliases: ['ava', 'icon', 'pp', 'pfp'],
-    description: 'Display avatar',
-    execute(message, args) {
-        if (!message.mentions.users.size) {
-            return message.channel.send(message.author.displayAvatarURL({ format: 'png', dynamic: true }));
+    data: new SlashCommandBuilder()
+        .setName('avatar')
+        .setDescription('Display user avatar')
+        .addUserOption(option => option
+            .setName("user")
+            .setDescription("The avatar of user you want to see")),
+    async execute(client, interaction) {
+        const user = interaction.options.get('user');
+        let ava;
+        if (user) {
+            ava = user.user.displayAvatarURL({ format: 'png', dynamic: true });
+        } else{
+            ava = interaction.user.displayAvatarURL({ format: 'png', dynamic: true });
         }
-        const avatarList = message.mentions.users.map(user => {
-            return user.displayAvatarURL({ format: 'png', dynamic: true });
-        })
-        message.channel.send(avatarList);
+        await interaction.reply(ava);
     }
 }
