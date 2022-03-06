@@ -1,25 +1,29 @@
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js')
+
 module.exports = {
-    name: 'ping',
-    description: 'Ping!',
-    execute(message, args, Discord, client) {
-        message.channel.send('Pinging').then(async msg => {
-            const ping = msg.createdTimestamp - message.createdTimestamp;
-            let color;
+    data: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Check ping-pong'),
+    async execute(client, interaction) {
+        await interaction.deferReply();
+        const sent = await interaction.editReply({ content: 'pinging...', fetchReply: true });
+        const ping = sent.createdTimestamp - interaction.createdTimestamp;
+        
+        let color;
 
-            if (ping < 100) {
-                color = "GREEN"
-            } else if (ping >= 100 & ping < 200) {
-                color = "YELLOW"
-            } else {
-                color = "RED"
-            }
+        if (ping < 100) {
+            color = "GREEN"
+        } else if (ping >= 100 & ping < 200) {
+            color = "YELLOW"
+        } else {
+            color = "RED"
+        }
 
-            const embedMessage = new Discord.MessageEmbed()
-                .setColor(color)
-                .setDescription(`:hourglass: ${ping}ms`);
+        const embedMessage = new MessageEmbed()
+            .setColor(color)
+            .setDescription(`:hourglass: ${ping}ms\n💓: ${client.ws.ping}ms`);
 
-            msg.edit(':ping_pong: pong');
-            msg.edit(embedMessage);
-        });
+        interaction.editReply({content: ':ping_pong: pong', embeds: [embedMessage]})
     },
 }

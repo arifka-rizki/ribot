@@ -1,14 +1,16 @@
-const Discord = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    name: 'my-info',
-    description: 'User info detail',
-    execute(message, args) {
-        const embedMessage = new Discord.MessageEmbed()
+    data: new SlashCommandBuilder()
+        .setName('my-info')
+        .setDescription('Your user info detail'),
+    async execute(client, interaction) {
+        const embedMessage = new MessageEmbed()
             .setColor('RANDOM')
-            .setTitle(message.author.username)
-            .setDescription(`**User ID**: ${message.author.id}\n**Joined Discord at**: ${message.author.createdAt}`)
-            .setFooter(message.author.tag);
-        message.channel.send(embedMessage);
+            .setTitle(interaction.user.username)
+            .setDescription(`**User ID**: ${interaction.user.id}\n**Joined Discord at**: ${interaction.user.createdAt}`)
+            .setFooter({text: interaction.user.tag});
+        await interaction.reply({ embeds: [embedMessage] })
     }
 }

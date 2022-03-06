@@ -1,14 +1,15 @@
-const Discord = require('discord.js');
+const { SlashCommandBuilder, userMention } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 module.exports = {
-    name: 'server',
-    description: 'Server info detail',
-    guildOnly: true,
-    execute(message, args) {
-        const embedMesssage = new Discord.MessageEmbed()
-            .setTitle(message.guild.name)
-            .setDescription(`**Total member**: ${message.guild.memberCount}\n**Created at**: ${message.guild.createdAt}\n**Owner**: ${message.guild.owner}`)
+    data: new SlashCommandBuilder()
+        .setName('server')
+        .setDescription('Show server info'),
+    async execute(client, interaction) {
+        const embedMesssage = new MessageEmbed()
+            .setTitle(interaction.guild.name)
+            .setDescription(`**Total member**: ${interaction.guild.memberCount}\n**Created at**: ${interaction.guild.createdAt}\n**Owner**: ${userMention(interaction.guild.ownerId)}`)
             .setColor('GOLD');
-        message.channel.send(embedMesssage);
+        await interaction.reply({ embeds: [embedMesssage] });
     }
 }
