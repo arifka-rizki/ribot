@@ -99,8 +99,6 @@ let ras = {
     },
 }
 
-let result
-
 const checkSender = function (id){
     if(id === '548141585217486848') return 'arif';
     else if(id === '706218764588417066') return 'ras';
